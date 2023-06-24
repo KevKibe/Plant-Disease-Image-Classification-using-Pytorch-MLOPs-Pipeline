@@ -1,0 +1,8 @@
+flask
+pandas
+requests
+torch
+torchvision
+resnet
+tensorflow
+
