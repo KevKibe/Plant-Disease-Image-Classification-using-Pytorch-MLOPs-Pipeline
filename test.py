@@ -1,11 +1,19 @@
+import io
 import requests
+from PIL import Image
+import torchvision.transforms as transforms
 
-# Set the URL of the Flask API
 url = 'http://localhost:5000/predict'
 
-# Open the image file and send it as part of the POST request
-with open('test\TomatoEarlyBlight6.JPG', 'rb') as f:
-    response = requests.post(url, files={'file': f})
+image_path = "test\TomatoEarlyBlight1.JPG"
+pil_image = Image.open(image_path)
 
-# Print the response from the server
-print(response.text)
+transform = transforms.ToTensor()
+tensor_image = transform(pil_image)
+
+img_bytes = io.BytesIO()
+transforms.ToPILImage()(tensor_image).save(img_bytes, format='PNG')
+
+r = requests.post(url, files={'file': ('image.png', img_bytes.getvalue(), 'image/png')})
+
+print(r.text)
