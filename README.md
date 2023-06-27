@@ -5,7 +5,7 @@ This is a project to build aa ResNet CNN model that can be used to classify imag
 The dataset is from [Kaggle](https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset) consisting of 87k images of healthy and diseased crop leaves categorized into 38 classes. The dataset is divided into 80/20 ratio of training and validation sets and a test set of 33 images.
 
 ## Training and Deployment
-The model was [trained](https://github.com/KevKibe/Plant-Disease-Image-Classification-using-Pytorch/tree/main/plant-dise on a custom ResNet9 CNN architecture and deployed as a REST API using Flask through a Docker image to Google Cloud Run. 
+The model was [trained](https://github.com/KevKibe/Plant-Disease-Image-Classification-using-Pytorch/blob/main/plant-disease-classification-resnet19.ipynb) on a custom ResNet9 CNN architecture and deployed as a REST API using Flask through a Docker image to Google Cloud Run. 
 
 ## Getting Started
 - Clone the repository: `git clone https://github.com/KevKibe/KevKibe/Plant-Disease-Image-Classification-using-Pytorch`
