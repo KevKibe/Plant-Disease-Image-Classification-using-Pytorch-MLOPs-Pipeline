@@ -1,5 +1,5 @@
-## Problem Statement
-This is a project to build aa ResNet CNN model that can be used to classify images of plant leaves as healthy or diseased. The model can also identify the specific disease that a leaf is suffering from, if applicable. The repository also includes a link to the training data that was used to train the model, as well as instructions on how to use the model.
+## Description
+This repository contains the code implementation of a ResNet CNN model used to classify images of plant leaves as healthy or diseased. The model also identifies the specific disease that a leaf is suffering from, if applicable. The repository also includes a link to the training data that was used to train the model, as well as instructions on how to use the model.
 
 ## Dataset
 The dataset is from [Kaggle](https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset) consisting of 87k images of healthy and diseased crop leaves categorized into 38 classes. The dataset is divided into 80/20 ratio of training and validation sets and a test set of 33 images.
