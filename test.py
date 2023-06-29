@@ -3,7 +3,7 @@ import requests
 from PIL import Image
 import torchvision.transforms as transforms
 
-url = 'http://localhost:5000/predict'
+url = 'http://192.168.1.64:5000/predict'
 
 image_path = "test\TomatoEarlyBlight1.JPG"
 pil_image = Image.open(image_path)
