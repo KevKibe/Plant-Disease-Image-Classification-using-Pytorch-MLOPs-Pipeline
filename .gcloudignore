@@ -1,8 +1,0 @@
-.gitignore
-LICENSE
-plant_disease_model.pkl
-plant-disease-classification-resnet19.ipynb
-README.md
-test.py
-__pycache__/
-.venv/

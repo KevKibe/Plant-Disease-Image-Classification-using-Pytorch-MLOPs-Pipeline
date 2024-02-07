@@ -1,11 +1,16 @@
+import os
 import io
 import requests
 from PIL import Image
 import torchvision.transforms as transforms
 
-url = 'http://192.168.1.64:5000/predict'
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
-image_path = "test\TomatoEarlyBlight1.JPG"
+url = 'http://192.168.1.64:3000/predict'
+
+# image_path = "test\TomatoEarlyBlight1.JPG"
+image_path = os.path.join(base_dir, '../test_data/AppleCedarRust1.JPG')
+
 pil_image = Image.open(image_path)
 
 transform = transforms.ToTensor()

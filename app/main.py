@@ -1,10 +1,16 @@
+import os
 import torch
 import torch.nn as nn
 from torchvision.transforms import ToTensor
 from flask import Flask, request, jsonify
 from PIL import Image
+from flasgger import Swagger
 
 app = Flask(__name__)
+swagger = Swagger(app)
+
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
 def ConvBlock(in_channels, out_channels, pool=False):
     layers = [nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1),
@@ -38,10 +44,12 @@ class ResNet9(nn.Module):
         return out
 
 model = ResNet9(in_channels=3, num_diseases=38) 
-model.load_state_dict(torch.load('plant_disease_model.pth', map_location=torch.device('cpu')))
+model_path = os.path.join(base_dir, '../models/plant_disease_model.pth')
+model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
 model.eval()
 
-class_names = open('class_names.txt', 'r').read().splitlines()
+classnames_path = os.path.join(base_dir, '../app/class_names.txt')
+class_names = open(classnames_path, 'r').read().splitlines()
 
 def to_device(data, device):
     if isinstance(data, (list, tuple)):
@@ -49,25 +57,48 @@ def to_device(data, device):
     return data.to(device, non_blocking=True)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
+ 
 def predict_image(img, model):
     xb = to_device(img.unsqueeze(0), device)
     yb = model(xb)
     _, preds = torch.max(yb, dim=1)
     return class_names[preds[0].item()]
 
-@app.route("/healthcheck", methods=["GET"])
-def healthcheck():
-    return jsonify({"status": "ok"})
+@staticmethod
+@app.route('/', methods=['GET'])
+def home():
+    """
+    Hello World endpoint.
+
+    ---
+    tags:
+      - Home
+    responses:
+      200:
+        description: Hello, World!
+    """
+    return "Hello, World!"
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if request.method == 'POST':
-        file = request.files['file']
-        img = Image.open(file.stream)
-        img_tensor = ToTensor()(img)
-        prediction = predict_image(img_tensor, model)
-        return prediction
+    """
+    Predict Plant Disease
+    ---
+    parameters:
+      - name: file
+        in: formData
+        type: file
+        required: true
+    responses:
+      200:
+        description: Prediction
+    """
+    file = request.files['file']
+    img = Image.open(file.stream)
+    img_tensor = ToTensor()(img)
+    prediction = predict_image(img_tensor, model)
+    return {"prediction": prediction}
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug = False)
+    app.run(debug= True, host='0.0.0.0', port=80)

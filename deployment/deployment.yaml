@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plant-disease-classification-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: plant-disease-classification
+  template:
+    metadata:
+      labels:
+        app: plant-disease-classification
+    spec:
+      containers:
+      - name: plant-disease-classification
+        image: kevkibe/plant-disease-classification
+        ports:
+        - containerPort: 80

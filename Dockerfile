@@ -1,15 +1,13 @@
-# Use the official Python image.
-# https://hub.docker.com/_/python
-FROM python:3.8-slim
 
-ENV PYTHONUNBUFFERED True
+FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+ADD . /app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app /app
+EXPOSE 80
 
-CMD ["python", "main.py"]
+
+CMD ["python", "app/main.py"]
